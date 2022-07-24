@@ -1,6 +1,6 @@
 import React from 'react'
 import Start from '../Start';
-import Quiz from '../../components/Quiz';
+import Quiz from '../Quiz';
 import Selection from '../Selection';
 import { useContext, useState, useEffect } from 'react';
 import { ApiContext } from '../../App';
@@ -12,8 +12,6 @@ const Container = () => {
     const {base} = apiData;
 
     const [finalApi, setFinalApi] = useState(base);
-
-    useEffect(() => console.log(finalApi), [finalApi])
 
     if(displayStatus.start){
         return <Start />

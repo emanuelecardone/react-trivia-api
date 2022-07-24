@@ -6,26 +6,26 @@ const useAxios = (api) => {
 
     // Hook che riceve un api già impostato in precedenza dove viene richiamato
     // Ritorna la risposta
-    const [data, setData] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
-    const [error, setError] = useState();
+    const [questionsData, setQuestionsData] = useState([]);
+    const [questionsIsLoading, setQuestionsIsLoading] = useState(false);
+    const [questionsError, setQuestionsError] = useState();
   
     useEffect(
         () => {
-            setIsLoading(true);
+            setQuestionsIsLoading(true);
             const getData = async () =>{
                 try{
-                    const {data} = await axios.get(api);
-                    setData(data);
-                    setIsLoading(false);
+                    const {data: {results}} = await axios.get(api);
+                    setQuestionsData(results);
+                    setQuestionsIsLoading(false);
                 }catch(error){
-                    setError(error);
+                    setQuestionsError(error);
                 }
             }
             getData();
         },
         [api]);
-        return { data, isLoading, error }
+        return { questionsData, questionsIsLoading, questionsError }
 }
 
 export default useAxios
