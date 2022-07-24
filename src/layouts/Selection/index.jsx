@@ -4,21 +4,38 @@ import { useContext, useState, useEffect } from 'react'
 import { ApiContext } from '../../App'
 import Button from '../../components/Button'
 
-const Selection = () => {
+
+const Selection = ({finalApi, setFinalApi}) => {
 
     const allData = useContext(ApiContext);
     const [apiData, displayStatus, setDisplayStatus] = allData;
+    const {base} = apiData;
     
     // Cambiato dalla select
     const [currChoice, setCurrChoice] = useState(
         {
             category: 'none',
             difficulty: 'none',
-            amount: 'none',
+            amount: 1
         }
     );
-
-    useEffect(() => console.log(currChoice), [currChoice])
+    
+    
+    useEffect(
+        () => {
+            // Debug per i none
+            let categoryString = `&category=${currChoice.category}`.toLowerCase();
+            let difficultyString = `&difficulty=${currChoice.difficulty}`.toLowerCase();
+            if(currChoice.category === 'none'){
+                categoryString = '';
+            }
+            if(currChoice.difficulty === 'none'){
+                difficultyString = '';
+            }
+            // Cambio dell'api di Container
+            setFinalApi(`${base}?amount=${currChoice.amount}${categoryString}${difficultyString}&type=multiple`);
+        },
+        [currChoice])
 
     return(
         <div className='selection'>
@@ -31,7 +48,7 @@ const Selection = () => {
             <h4>Current: <br/>
             {'Category: ' + currChoice.category + ' - Difficulty: ' + currChoice.difficulty + ' - Amount: ' + currChoice.amount}
             </h4>
-            <Button message='da fare' sections={[]} />
+            <Button message='Start' sections={['selection', 'quiz']} />
         </div>
     )
 }

@@ -22,7 +22,7 @@ function useGetApi(tokenApi, categoriesApi) {
                         {
                             // Token valido per 6h
                             token: tokenValue,
-                            base: 'https://opentdb.com/api.php?',
+                            base: 'https://opentdb.com/api.php',
                             categories: {
                               list: categoriesValue
                             },

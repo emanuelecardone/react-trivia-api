@@ -16,7 +16,8 @@ function App() {
   // Oggetto return di Container
   const display = {
     start: true,
-    selection: false
+    selection: false,
+    quiz: false
   }
 
   const [displayStatus, setDisplayStatus] = useState(display);
