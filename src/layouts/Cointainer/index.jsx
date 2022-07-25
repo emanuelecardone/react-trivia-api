@@ -17,10 +17,6 @@ const Container = () => {
     
     useEffect(() => {
         console.log(score, amount)
-        // Il controllo con amount necessita parseint perché trasformato in stringa
-        if(score === parseInt(amount)){
-            alert(`Hai completato il ${100 * score / amount}% delle domande`)
-        }
     }, [score, amount])
 
     if(displayStatus.start){

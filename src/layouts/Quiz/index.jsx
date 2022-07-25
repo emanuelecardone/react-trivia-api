@@ -32,6 +32,7 @@ const Quiz = ({finalApi, setScore, score, amount}) => {
     return (
       <div className='quiz justify-content-between'>
         <h3 className='mb-5'>Questions (click to open)</h3>
+        <h4>Hai completato il {100 * score / parseInt(amount)}% delle domande</h4>
         <div className='questions_list w-100 h_70 d-flex flex-column align-items-center'>
           {questionsData.map((question, index) => (
             <Question key={question.question} question={question} index={index} setCurrQuestion={setCurrQuestion} setClicked={setClicked} completedQuestions={completedQuestions} />

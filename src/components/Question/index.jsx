@@ -18,7 +18,8 @@ const Question = ({question, index, setCurrQuestion, setClicked, completedQuesti
 
     return (
         <div onClick={changeCurrQuestion} className={`question px-2 py-3 border border-4 border-light`}
-        style={{backgroundColor: completedQuestions.includes(index) ? 'lime' : 'transparent'}}>
+        style={{backgroundColor: completedQuestions.includes(index) ? 'lime' : 'transparent',
+                pointerEvents: completedQuestions.includes(index) ? 'none' : 'auto'}}>
             <div className='question_box'>
                 Question: {question.question}
             </div>
