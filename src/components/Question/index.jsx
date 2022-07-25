@@ -1,14 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import './style.scss';
 
-const Question = ({question, index, setCurrQuestion, setClicked, completedQuestions}) => {
+const Question = ({question, index, setCurrQuestion, setClicked, completedQuestions, wrongQuestions}) => {
 
     let completedCopy;
+    let thisColor;
     useEffect(() => {
         completedCopy = completedQuestions;
+        // Per decidere rosso o verde
+        thisColor = 'transparent';
     }, [completedQuestions])
+
+    const [newColor, setNewColor] = useState(thisColor);
+
+    useEffect(
+        () => {
+            if(completedQuestions.includes(index)){
+                setNewColor('lime');
+            } else if (wrongQuestions.includes(index)){
+                setNewColor('red');
+            }
+        },
+        [setClicked])
 
     // Cambio index domanda attuale
     const changeCurrQuestion = () => {
@@ -18,8 +33,8 @@ const Question = ({question, index, setCurrQuestion, setClicked, completedQuesti
 
     return (
         <div onClick={changeCurrQuestion} className={`question px-2 py-3 border border-4 border-light`}
-        style={{backgroundColor: completedQuestions.includes(index) ? 'lime' : 'transparent',
-                pointerEvents: completedQuestions.includes(index) ? 'none' : 'auto'}}>
+        style={{backgroundColor: newColor,
+                pointerEvents: completedQuestions.includes(index) || wrongQuestions.includes(index) ? 'none' : 'auto'}}>
             <div className='question_box'>
                 Question: {question.question}
             </div>

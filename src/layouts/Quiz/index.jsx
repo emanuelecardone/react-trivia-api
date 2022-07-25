@@ -7,7 +7,7 @@ import { useState, useContext, useEffect } from 'react';
 import { ApiContext } from '../../App';
 import './style.scss';
 
-const Quiz = ({finalApi, setScore, score, amount}) => {
+const Quiz = ({finalApi, wrongScore, setWrongScore, setScore, score, amount}) => {
 
   const {questionsData, questionsIsLoading, questionsError} = useAxios(finalApi);
   const allData = useContext(ApiContext);
@@ -19,6 +19,7 @@ const Quiz = ({finalApi, setScore, score, amount}) => {
 
   // Completate
   const [completedQuestions, setCompletedQuestions] = useState([]);
+  const [wrongQuestions, setWrongQuestions] = useState([]);
 
   useEffect(() => {
     console.log(completedQuestions);
@@ -35,14 +36,17 @@ const Quiz = ({finalApi, setScore, score, amount}) => {
         <h4>Hai completato il {100 * score / parseInt(amount)}% delle domande</h4>
         <div className='questions_list w-100 h_70 d-flex flex-column align-items-center'>
           {questionsData.map((question, index) => (
-            <Question key={question.question} question={question} index={index} setCurrQuestion={setCurrQuestion} setClicked={setClicked} completedQuestions={completedQuestions} />
+            <Question key={question.question} question={question} index={index} setCurrQuestion={setCurrQuestion} setClicked={setClicked} completedQuestions={completedQuestions} wrongQuestions={wrongQuestions} />
           ))}
         </div>
       </div>
     )
   } else if(clicked){
     return(
-      <QuestionBox question={questionsData[currQuestion]} index={currQuestion} setScore={setScore} score={score} amount={amount} completedQuestions={completedQuestions} setCompletedQuestions={setCompletedQuestions} setCurrQuestion={setCurrQuestion} setClicked={setClicked} />  
+      <QuestionBox question={questionsData[currQuestion]} index={currQuestion} wrongScore={wrongScore} setWrongScore={setWrongScore} 
+      setScore={setScore} score={score} amount={amount} completedQuestions={completedQuestions} 
+      setCompletedQuestions={setCompletedQuestions} wrongQuestions={wrongQuestions} setWrongQuestions={setWrongQuestions}  
+      setCurrQuestion={setCurrQuestion} setClicked={setClicked} />  
     );
     
   }

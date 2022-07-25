@@ -5,10 +5,12 @@ import { useEffect, useState } from 'react';
 import shuffle from 'lodash/shuffle';
 import './style.scss';
 
-const QuestionBox = ({question, index, setScore, score, amount, completedQuestions, setCompletedQuestions, setCurrQuestion, setClicked}) => {
+const QuestionBox = ({question, index, wrongScore, setWrongScore, setScore, score, amount, completedQuestions, setCompletedQuestions, wrongQuestions, setWrongQuestions, setCurrQuestion, setClicked}) => {
 
     let scoreCopy;
+    let wrongScoreCopy;
     let completedCopy;
+    let wrongQuestionsCopy;
     let answered = false;
     let removeClock = null;
     let result;
@@ -16,7 +18,9 @@ const QuestionBox = ({question, index, setScore, score, amount, completedQuestio
     const [newAnswered, setNewAnswered] = useState(answered);
     useEffect(() => {
         scoreCopy = score; 
+        wrongScoreCopy = wrongScore;
         completedCopy = [...completedQuestions];
+        wrongQuestionsCopy = [...wrongQuestions]
     }, [score])
 
     // Ritorno lista domande
@@ -27,9 +31,9 @@ const QuestionBox = ({question, index, setScore, score, amount, completedQuestio
 
     // Funzione per mostrare il risultato
     const checkAnswer = (answer) => (e) => {
-        if(answer === 'correct' && scoreCopy !== amount){
-            setNewAnswered(true);
-            setNewResult(answer);
+        setNewAnswered(true);
+        setNewResult(answer);
+        if(answer === 'correct'){
             completedCopy.push(index);
             scoreCopy++;
             setScore(scoreCopy);
@@ -38,7 +42,16 @@ const QuestionBox = ({question, index, setScore, score, amount, completedQuestio
                 setNewAnswered(false);
                 backToAnswers();
             }, 2000)
-        }     
+        } else{
+            wrongQuestionsCopy.push(index);
+            wrongScoreCopy++;
+            setWrongScore(wrongScoreCopy);
+            setWrongQuestions([...wrongQuestionsCopy]);
+            removeClock = setTimeout(() => {
+                setNewAnswered(false);
+                backToAnswers();
+            }, 2000)
+        }
     }
 
     

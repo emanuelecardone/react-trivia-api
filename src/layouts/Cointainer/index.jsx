@@ -14,6 +14,7 @@ const Container = () => {
     const [finalApi, setFinalApi] = useState(base);
     const [amount, setAmount] = useState(1);
     const [score, setScore] = useState(0);
+    const [wrongScore, setWrongScore] = useState(0);
     
     useEffect(() => {
         console.log(score, amount)
@@ -24,7 +25,7 @@ const Container = () => {
     } else if(displayStatus.selection){
         return <Selection finalApi={finalApi} setFinalApi={setFinalApi} setAmount={setAmount} />
     } else if(displayStatus.quiz){
-        return <Quiz finalApi={finalApi} setScore={setScore} score={score} amount={amount} />
+        return <Quiz finalApi={finalApi} setScore={setScore} wrongScore={wrongScore} setWrongScore={setWrongScore} score={score} amount={amount} />
     }
 }
 
