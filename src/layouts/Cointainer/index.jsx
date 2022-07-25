@@ -12,13 +12,20 @@ const Container = () => {
     const {base} = apiData;
 
     const [finalApi, setFinalApi] = useState(base);
+    const [amount, setAmount] = useState(1);
+    const [score, setScore] = useState(0);
+    useEffect(() => {
+        if(score === amount){
+            alert(`Hai completato il ${100 * score / amount}% delle domande`)
+        }
+    }, [score])
 
     if(displayStatus.start){
         return <Start />
     } else if(displayStatus.selection){
-        return <Selection finalApi={finalApi} setFinalApi={setFinalApi} />
+        return <Selection finalApi={finalApi} setFinalApi={setFinalApi} setAmount={setAmount} />
     } else if(displayStatus.quiz){
-        return <Quiz finalApi={finalApi} />
+        return <Quiz finalApi={finalApi} setScore={setScore} score={score} amount={amount} />
     }
 }
 

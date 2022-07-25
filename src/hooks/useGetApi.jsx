@@ -2,7 +2,7 @@ import React from 'react'
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-function useGetApi(tokenApi, categoriesApi) {
+const useGetApi = (tokenApi, categoriesApi) => {
 
     // Hook che riceve un array di api e builda l'oggetto per fare le chiamate
     const [apiData, setApiData] = useState({});

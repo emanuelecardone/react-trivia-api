@@ -3,12 +3,16 @@ import PropTypes from 'prop-types';
 import Question from '../../components/Question';
 import QuestionBox from '../../components/QuestionBox';
 import useAxios from '../../hooks/useAxios';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { ApiContext } from '../../App';
 import './style.scss';
 
-const Quiz = ({finalApi}) => {
+const Quiz = ({finalApi, setScore, score, amount}) => {
 
   const {questionsData, questionsIsLoading, questionsError} = useAxios(finalApi);
+  const allData = useContext(ApiContext);
+  const [apiData, displayStatus, setDisplayStatus] = allData;
+
   // Selezione domanda
   const [currQuestion, setCurrQuestion] = useState('none');
   const [clicked, setClicked] = useState(false);
@@ -30,14 +34,15 @@ const Quiz = ({finalApi}) => {
     )
   } else if(clicked){
     return(
-      <QuestionBox question={questionsData[currQuestion]} index={currQuestion}/>  
+      <QuestionBox question={questionsData[currQuestion]} index={currQuestion} setScore={setScore} score={score} amount={amount} />  
     );
     
   }
 }
 
 Quiz.propTypes = {
-  finalApi: PropTypes.string.isRequired
+  finalApi: PropTypes.string.isRequired,
+  setScore: PropTypes.func.isRequired
 }
 
 export default Quiz

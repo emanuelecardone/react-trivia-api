@@ -4,10 +4,18 @@ import { useEffect, useState } from 'react';
 import shuffle from 'lodash/shuffle';
 import './style.scss';
 
-const QuestionBox = ({question, index}) => {
+const QuestionBox = ({question, index, setScore, score, amount}) => {
+
+    let scoreCopy;
+    useEffect(() => {scoreCopy = score}, [score])
 
     const checkAnswer = (answer) => (e) => {
-        console.log(answer)
+        if(answer === 'correct'){
+            if(scoreCopy !== amount){
+                scoreCopy++;
+                setScore(scoreCopy)              
+            }            
+        }    
     }
 
     // Crezione array risposte con ordine casuale
@@ -26,7 +34,6 @@ const QuestionBox = ({question, index}) => {
             // Mixed array lodash
             const mixedArray = shuffle(answerBoxes)
             setAnswersList(mixedArray);
-            console.log(answersList, question.correct_answer)
         },
         []
     );

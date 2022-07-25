@@ -5,7 +5,7 @@ import { ApiContext } from '../../App'
 import Button from '../../components/Button'
 
 
-const Selection = ({finalApi, setFinalApi}) => {
+const Selection = ({finalApi, setFinalApi, setAmount}) => {
 
     const allData = useContext(ApiContext);
     const [apiData, displayStatus, setDisplayStatus] = allData;
@@ -34,6 +34,7 @@ const Selection = ({finalApi, setFinalApi}) => {
             }
             // Cambio dell'api di Container
             setFinalApi(`${base}?amount=${currChoice.amount}${categoryString}${difficultyString}&type=multiple`);
+            setAmount(currChoice.amount);
         },
         [currChoice])
 
