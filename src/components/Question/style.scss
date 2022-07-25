@@ -1,4 +1,8 @@
 .question{
     width: calc(50% - .25rem);
     cursor: pointer;
+
+    &_completed{
+        background-color: goldenrod;
+    }
 }

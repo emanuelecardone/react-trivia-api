@@ -14,11 +14,14 @@ const Container = () => {
     const [finalApi, setFinalApi] = useState(base);
     const [amount, setAmount] = useState(1);
     const [score, setScore] = useState(0);
+    
     useEffect(() => {
-        if(score === amount){
+        console.log(score, amount)
+        // Il controllo con amount necessita parseint perché trasformato in stringa
+        if(score === parseInt(amount)){
             alert(`Hai completato il ${100 * score / amount}% delle domande`)
         }
-    }, [score])
+    }, [score, amount])
 
     if(displayStatus.start){
         return <Start />

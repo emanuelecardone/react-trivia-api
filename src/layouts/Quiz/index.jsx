@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import Question from '../../components/Question';
 import QuestionBox from '../../components/QuestionBox';
 import useAxios from '../../hooks/useAxios';
-import { useState, useContext } from 'react';
+import { useState, useContext, useEffect } from 'react';
 import { ApiContext } from '../../App';
 import './style.scss';
 
@@ -17,6 +17,13 @@ const Quiz = ({finalApi, setScore, score, amount}) => {
   const [currQuestion, setCurrQuestion] = useState('none');
   const [clicked, setClicked] = useState(false);
 
+  // Completate
+  const [completedQuestions, setCompletedQuestions] = useState([]);
+
+  useEffect(() => {
+    console.log(completedQuestions);
+  }, [completedQuestions])
+
   if(questionsIsLoading){
     return  <div className='w-100 h-100 d-flex justify-content-center align-items-center'>
               Loading...
@@ -27,14 +34,14 @@ const Quiz = ({finalApi, setScore, score, amount}) => {
         <h3 className='mb-5'>Questions (click to open)</h3>
         <div className='questions_list w-100 h_70 d-flex flex-column align-items-center'>
           {questionsData.map((question, index) => (
-            <Question key={question.question} question={question} index={index} setCurrQuestion={setCurrQuestion} setClicked={setClicked} />
+            <Question key={question.question} question={question} index={index} setCurrQuestion={setCurrQuestion} setClicked={setClicked} completedQuestions={completedQuestions} />
           ))}
         </div>
       </div>
     )
   } else if(clicked){
     return(
-      <QuestionBox question={questionsData[currQuestion]} index={currQuestion} setScore={setScore} score={score} amount={amount} />  
+      <QuestionBox question={questionsData[currQuestion]} index={currQuestion} setScore={setScore} score={score} amount={amount} completedQuestions={completedQuestions} setCompletedQuestions={setCompletedQuestions} setCurrQuestion={setCurrQuestion} setClicked={setClicked} />  
     );
     
   }

@@ -1,8 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { useEffect } from 'react';
 import './style.scss';
 
-const Question = ({question, index, setCurrQuestion, setClicked}) => {
+const Question = ({question, index, setCurrQuestion, setClicked, completedQuestions}) => {
+
+    let completedCopy;
+    useEffect(() => {
+        completedCopy = completedQuestions;
+    }, [completedQuestions])
 
     // Cambio index domanda attuale
     const changeCurrQuestion = () => {
@@ -11,7 +17,8 @@ const Question = ({question, index, setCurrQuestion, setClicked}) => {
     }
 
     return (
-        <div onClick={changeCurrQuestion} className='question px-2 py-3 border border-4 border-light'>
+        <div onClick={changeCurrQuestion} className={`question px-2 py-3 border border-4 border-light`}
+        style={{backgroundColor: completedQuestions.includes(index) ? 'lime' : 'transparent'}}>
             <div className='question_box'>
                 Question: {question.question}
             </div>

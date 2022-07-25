@@ -4,18 +4,25 @@ import { useEffect, useState } from 'react';
 import shuffle from 'lodash/shuffle';
 import './style.scss';
 
-const QuestionBox = ({question, index, setScore, score, amount}) => {
+const QuestionBox = ({question, index, setScore, score, amount, completedQuestions, setCompletedQuestions, setCurrQuestion, setClicked}) => {
 
     let scoreCopy;
-    useEffect(() => {scoreCopy = score}, [score])
+    let completedCopy;
+    useEffect(() => {scoreCopy = score; completedCopy = [...completedQuestions]}, [score])
 
     const checkAnswer = (answer) => (e) => {
-        if(answer === 'correct'){
-            if(scoreCopy !== amount){
-                scoreCopy++;
-                setScore(scoreCopy)              
-            }            
+        if(answer === 'correct' && scoreCopy !== amount){
+            completedCopy.push(index);
+            scoreCopy++;
+            setScore(scoreCopy);
+            setCompletedQuestions([...completedCopy]);
         }    
+    }
+
+    // Ritorno lista domande
+    const backToAnswers = () => {
+        setCurrQuestion('none');
+        setClicked(false);
     }
 
     // Crezione array risposte con ordine casuale
@@ -46,6 +53,7 @@ const QuestionBox = ({question, index, setScore, score, amount}) => {
         <div className={'question_box_down w-100 h_80 d-flex flex-wrap justify-content-between'}>
             {answersList}
         </div>
+        <a onClick={backToAnswers} href='#' className='btn btn-light text-success px-3 py-2'>Back</a>
     </div>
   )
 }
